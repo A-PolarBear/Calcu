@@ -1,9 +1,6 @@
 # Calcu
 
 ````
-├─Calcu
-│  ├─calcu
-│  └─icon
 └─CALCULATOR
     ├─exe
     │  ├─iconengines
