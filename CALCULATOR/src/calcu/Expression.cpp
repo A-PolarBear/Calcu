@@ -42,16 +42,23 @@ bool Expression::Check_Split() {
                 if (++i >= origin_exp.size()) break;
             } while (isdigit(origin_exp[i]) || ((!getPoint) && origin_exp[i] == '.')||((!getSci) && origin_exp[i] == 'e')||(getSci && origin_exp[i]=='-')||origin_exp[i]=='I');
             if(origin_exp[i-1]!='.'){//当前最后一位不为小数点
-                if(temp_a!=-1&&origin_exp.substr(temp,temp_a-temp)=="PI"){//插入宏定义PI
-                    exp.push_back(character{ 0,0,0, PI+origin_exp.substr(temp_a, i - temp_a)});
+                if(temp_a!=-1){
+                    std::string x=origin_exp.substr(temp, temp_a-temp);
+                    if(x=="PI"){//插入宏定义PI
+                        exp.push_back(character{ 0,0,0, PI+origin_exp.substr(temp_a, i - temp_a)});
+                    }
+                    else if(x=="E"){//插入宏定义E
+                        exp.push_back(character{ 0,0,0, E+origin_exp.substr(temp_a, i - temp_a) });
+                    }
+                    else if(isdigit(x[0])){
+                        exp.push_back(character{ 0,0,0,origin_exp.substr(temp, i - temp)});
+                    }
+                    else{
+                        throw std::runtime_error(ExpressionError::ILLEGAL_CHARACTER_ERROR);
+                    }
                 }
-                else if(temp_a!=-1&&origin_exp.substr(temp,temp_a-temp)=="E"){//插入宏定义E
-                    exp.push_back(character{ 0,0,0, E+origin_exp.substr(temp_a, i - temp_a) });
-                }
-                else if(temp_a == temp){
-                    throw std::runtime_error(ExpressionError::ILLEGAL_CHARACTER_ERROR);
-                }
-                else {
+
+                else{
                     std::string t=origin_exp.substr(temp, i - temp);
                     if(t=="PI"){
                         exp.push_back(character{0, 0, 0, PI});
@@ -59,8 +66,11 @@ bool Expression::Check_Split() {
                     else if(t=="E"){
                         exp.push_back(character{0, 0, 0, E});
                     }
-                    else{
+                    else if(isdigit(t[0])){
                         exp.push_back(character{0, 0, 0, t});
+                    }
+                    else{
+                        throw std::runtime_error(ExpressionError::ILLEGAL_CHARACTER_ERROR);
                     }
                 }
             }
@@ -127,7 +137,7 @@ void Expression::NegativePreprocessing(){
             else{
                 //如果负号前为括号，在负号前添加数字0
                 --i;
-                if ((*i).priority >0){
+                if ((*i).priority == 30){
                     ++i;
                     i = exp.insert(i,CHARACTER.at("0"));
                 }
@@ -143,8 +153,10 @@ void Expression::TransToPostfix() {
         for (auto &i : exp)
         {
             //如果当前元素为数值，压入数值栈
-            if (i.type == 0)
+            if (i.type == 0){
+                postfix_exp.append(i.c+' ');
                 num.push(stold(i.c));
+            }
             //如果当前元素为运算符，比较其与运算符栈顶元素的优先级
             else if (i.type == 1)
             {
@@ -154,12 +166,12 @@ void Expression::TransToPostfix() {
                  * 并依次对出栈的运算符进行运算
                  * 然后入栈当前运算符
                  */
-                if (!op.isEmpty() && i.priority <= op.Top().priority && op.Top().priority<30)
+                if (!op.isEmpty() && i.priority <= op.Top().priority && op.Top().priority!=30)
                 {
                     do
                     {
                         operation();
-                    } while (!op.isEmpty()&&i.priority <= op.Top().priority);
+                    } while (!op.isEmpty()&&i.priority <= op.Top().priority&&op.Top().priority!=30);
                 }
                 op.push(i);
             }
@@ -178,7 +190,9 @@ void Expression::TransToPostfix() {
                     {
                         operation();
                     }
-                    if(!op.isEmpty()) op.pop();
+                    if(!op.isEmpty()) {
+                        op.pop();
+                    }
                 }
             }
             else if (op.isEmpty())
@@ -209,10 +223,17 @@ long double Expression::getres() {
         throw;
     }
 
-    res = num.Top();  //数字栈中最后一个数即为结果
+
+    res = num.Top(); //数字栈中最后一个数即为结果
     std::cout<<std::setprecision(10);//设置显示小数位
     return res;
 }
+
+std::string Expression::postfix() {
+    return postfix_exp;
+}
+
+
 
 //计算
 void Expression::operation() {
@@ -226,6 +247,7 @@ void Expression::operation() {
         long double num1,num2;
             calc(op.Top(),num1,num2);
     }
+    if(op.Top().c!="(") postfix_exp.append(op.Top().c+' ');
     op.pop();
 }
 

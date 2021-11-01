@@ -308,6 +308,21 @@ void MainWindow::initKeybored()
                    ui->plainTextEdit->appendPlainText(str);
                }
     });
+    //转换后缀表达式
+    connect(ui->pushButton_POSTFIX,&QAbstractButton::clicked,
+            ui->plainTextEdit,[&]{
+        ui->plainTextEdit_2->clear(); //结果文本框清空
+        QString expression = ui->plainTextEdit->toPlainText(); //获取文本框内容
+        while(expression.size()>0){ //依次处理多表达式
+            QString str = expression.section("\n",0,0); //换行符分隔
+            expression = expression.mid(str.size()+1);
+            ui->plainTextEdit_2->insertPlainText(postfix(str));
+            ui->plainTextEdit_2->appendPlainText("");
+            ui->plainTextEdit->setFocus();
+        }
+    });
+
+
 }
 
 std::string MainWindow::transformStdExpression(QString expression) //将表达式中的特殊字符转换
@@ -323,6 +338,22 @@ QString MainWindow::cal(QString s)  //调用Expression.cpp进行计算
     try
     {
         temp=QString::number(expression.getres(),'g', 12);
+    }catch(std::runtime_error e){
+        QMessageBox messagebox(QMessageBox::Warning,"错误",QString::fromStdString(e.what()));
+        messagebox.exec();
+        temp = "Error";
+    }
+    return temp;
+}
+
+QString MainWindow::postfix(QString s)
+{
+    QString temp;
+    Expression expression(transformStdExpression(s));
+    try
+    {
+        expression.getres();
+        temp = QString::fromStdString(expression.postfix());
     }catch(std::runtime_error e){
         QMessageBox messagebox(QMessageBox::Warning,"错误",QString::fromStdString(e.what()));
         messagebox.exec();

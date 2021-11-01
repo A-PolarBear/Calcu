@@ -75,6 +75,8 @@
         <file>icon/FILE-P.png</file>
         <file>icon/help.png</file>
         <file>icon/help-p.png</file>
+        <file>icon/POSTFIX.png</file>
+        <file>icon/POSTFIX-P.png</file>
     </qresource>
     <qresource prefix="/fonts">
         <file>Retroville-NC-1.ttf</file>

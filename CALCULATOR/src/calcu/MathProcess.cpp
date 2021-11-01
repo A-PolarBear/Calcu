@@ -25,10 +25,10 @@ long double MathProcess::multiply(const long double &num1, const long double &nu
 }
 
 long double MathProcess::divide(const long double &num1, const long double &num2) const {
-    if(std::abs(num1) < 1e-8 ){ //除数不为零
-        throw std::runtime_error(MathError::DIVIDED_BY_ZERO);
+    if(std::abs(num2) > 0 ){ //除数不为零
+        return num1 / num2;
     }
-    return num1 / num2;
+    throw std::runtime_error(MathError::DIVIDED_BY_ZERO);
 }
 
 long double MathProcess::mod(const long double &num1, const long double &num2) const {

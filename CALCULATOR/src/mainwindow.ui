@@ -754,7 +754,7 @@ QPushButton:pressed{border-image: url(:/new/icon/FILE-P.png);}
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_file_2">
+   <widget class="QPushButton" name="pushButton_HELP">
     <property name="geometry">
      <rect>
       <x>160</x>
@@ -766,6 +766,24 @@ QPushButton:pressed{border-image: url(:/new/icon/FILE-P.png);}
     <property name="styleSheet">
      <string notr="true">QPushButton{border-image: url(:/new/icon/help.png);}
 QPushButton:pressed{border-image: url(:/new/icon/help-p.png);}
+</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_POSTFIX">
+    <property name="geometry">
+     <rect>
+      <x>560</x>
+      <y>10</y>
+      <width>131</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton{border-image: url(:/new/icon/POSTFIX.png);}
+QPushButton:pressed{border-image: url(:/new/icon/POSTFIX-P.png);}
 </string>
     </property>
     <property name="text">
@@ -812,7 +830,8 @@ QPushButton:pressed{border-image: url(:/new/icon/help-p.png);}
    <zorder>pushButton_fac</zorder>
    <zorder>plainTextEdit_2</zorder>
    <zorder>pushButton_file</zorder>
-   <zorder>pushButton_file_2</zorder>
+   <zorder>pushButton_HELP</zorder>
+   <zorder>pushButton_POSTFIX</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

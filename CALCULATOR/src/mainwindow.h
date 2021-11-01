@@ -32,5 +32,6 @@ private:
     void initKeybored();
     std::string transformStdExpression(QString expression);
     QString cal(QString s);
+    QString postfix(QString s);
 };
 #endif // MAINWINDOW_H

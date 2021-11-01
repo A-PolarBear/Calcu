@@ -24,6 +24,7 @@ class Expression {
 private:
     std::string origin_exp;//原始表达式
     std::list<character> exp;//分离后的表达式
+    std::string postfix_exp;
     SimStack<character> op;//运算符栈
     SimStack<long double> num;//操作数栈
     MathProcess math;//数学运算
@@ -42,6 +43,7 @@ public:
     explicit Expression(std::string str);
     ~ Expression();
     long double getres();//获取结果
+    std::string postfix();
 };
 
 
