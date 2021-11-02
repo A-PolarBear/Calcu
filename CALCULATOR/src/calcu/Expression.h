@@ -24,7 +24,7 @@ class Expression {
 private:
     std::string origin_exp;//原始表达式
     std::list<character> exp;//分离后的表达式
-    std::string postfix_exp;
+    std::string postfix_exp;//逆波兰表达式
     SimStack<character> op;//运算符栈
     SimStack<long double> num;//操作数栈
     MathProcess math;//数学运算
@@ -36,14 +36,14 @@ private:
     void BracketPreprocessing();//括号匹配检测
     void PreProcessing();//预处理
     void operation();//运算
-    void TransToPostfix();//转换成逆波兰表达式
+    void TransToPostfix();//转换成逆波兰表达式并计算
     void calc(character op, long double &num1);//单目运算符计算
     void calc(character op, long double &num1, long double &num2);//双目运算符计算
 public:
     explicit Expression(std::string str);
     ~ Expression();
     long double getres();//获取结果
-    std::string postfix();
+    std::string postfix();//获取逆波兰表达式
 };
 
 

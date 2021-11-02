@@ -229,7 +229,7 @@ long double Expression::getres() {
     return res;
 }
 
-std::string Expression::postfix() {
+std::string Expression::postfix() { //逆波兰表达式输出
     return postfix_exp;
 }
 

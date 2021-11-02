@@ -346,7 +346,7 @@ QString MainWindow::cal(QString s)  //调用Expression.cpp进行计算
     return temp;
 }
 
-QString MainWindow::postfix(QString s)
+QString MainWindow::postfix(QString s) //输出逆波兰表达式
 {
     QString temp;
     Expression expression(transformStdExpression(s));
