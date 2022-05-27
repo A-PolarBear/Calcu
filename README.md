@@ -3,7 +3,7 @@
 CalcuX计算器，该计算器可实现加减乘除、单目负、开方乘方、求余、三角函数、反三角函数、自然对数与常用对数、阶乘功能的实现
 
 ## 界面预览
-![界面截图](image\screenshot.png)
+![界面截图]](https://github.com/A-PolarBear/CalcuX/blob/main/image/screenshot.png)
 ## 目录结构
 ````
 │  Calcu_v1.2.exe  可执行文件
